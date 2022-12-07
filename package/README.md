@@ -18,7 +18,7 @@ Import the package under a namespace:
 @use 'open-props-scss' as op;
 ```
 
-And start using the props! The names are all camelCase by convention.
+And start using the props! The names are all camelCase by convention. You can see the full list of variables on [unpkg](https://unpkg.com/open-props-scss).
 
 ```scss
 body {
@@ -42,3 +42,7 @@ A common workflow is to assign open props to your own custom properties. This re
 	color: var(--page-text);
 }
 ```
+
+## Acknowledgements
+
+All I did is convert the tokens to Sass variables. The credit for the actual thing goes to [Adam Argyle](https://github.com/argyleink) for making Open Props. 💜
