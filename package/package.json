@@ -2,7 +2,10 @@
 	"name": "open-props-scss",
 	"version": "0.1.0",
 	"license": "MIT",
-	"type": "module",
+	"main": "index.scss",
+	"files": [
+		"index.scss"
+	],
 	"exports": {
 		".": "./index.scss"
 	},
