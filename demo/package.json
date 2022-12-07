@@ -1,0 +1,14 @@
+{
+	"name": "demo",
+	"version": "0.1.0",
+	"type": "module",
+	"devDependencies": {
+		"astro": "~1.6.13",
+		"open-props-scss": "*",
+		"sass": "^1.56.1"
+	},
+	"scripts": {
+		"dev": "astro dev",
+		"build": "astro build"
+	}
+}

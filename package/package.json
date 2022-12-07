@@ -1,0 +1,16 @@
+{
+	"name": "open-props-scss",
+	"version": "0.1.0",
+	"license": "MIT",
+	"type": "module",
+	"exports": {
+		".": "./index.scss"
+	},
+	"scripts": {
+		"build": "node ./generateScss.mjs"
+	},
+	"devDependencies": {
+		"open-props": "^1.5.1",
+		"sass": "^1.56.1"
+	}
+}
