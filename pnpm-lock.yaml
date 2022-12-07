@@ -22,15 +22,10 @@ importers:
 
   package:
     specifiers:
-      '@csstools/postcss-design-tokens': ^1.2.0
       open-props: ^1.5.1
-      postcss: ^8.4.19
       sass: ^1.56.1
-    dependencies:
-      open-props: 1.5.1
     devDependencies:
-      '@csstools/postcss-design-tokens': 1.2.0_postcss@8.4.19
-      postcss: 8.4.19
+      open-props: 1.5.1
       sass: 1.56.1
 
 packages:
@@ -367,16 +362,6 @@ packages:
       '@babel/helper-string-parser': 7.19.4
       '@babel/helper-validator-identifier': 7.19.1
       to-fast-properties: 2.0.0
-    dev: true
-
-  /@csstools/postcss-design-tokens/1.2.0_postcss@8.4.19:
-    resolution: {integrity: sha512-XNIhRcAnfjLbm4omphcpTGBlmquyGTiKJgZU7EKfqBo6GXlQIlqTK8ylVe941WIm/e5TzYoqK9Wj1IB7yu5rzQ==}
-    engines: {node: ^12 || ^14 || >=16}
-    peerDependencies:
-      postcss: ^8.2
-    dependencies:
-      postcss: 8.4.19
-      postcss-value-parser: 4.2.0
     dev: true
 
   /@emmetio/abbreviation/2.2.3:
@@ -2666,7 +2651,7 @@ packages:
 
   /open-props/1.5.1:
     resolution: {integrity: sha512-FA1T/0neIXWaJToPhS4HjBrgEFOeVOAUls9cOe1ME1BV4G25sIKdRNdZhzNNgOQ2RtfuZCTGtSKVnhjdD4Gzvg==}
-    dev: false
+    dev: true
 
   /open/8.4.0:
     resolution: {integrity: sha512-XgFPPM+B28FtCCgSb9I+s9szOC1vZRSwgWsRUA5ylIxRTgKozqjOCrVOqGsYABPYK5qnfqClxZTFBa8PKt2v6Q==}
@@ -2813,10 +2798,6 @@ packages:
       lilconfig: 2.0.6
       postcss: 8.4.19
       yaml: 1.10.2
-    dev: true
-
-  /postcss-value-parser/4.2.0:
-    resolution: {integrity: sha512-1NNCs6uurfkVbeXG4S8JFT9t19m45ICnif8zWLd5oPSZ50QnwMfK+H3jv408d4jw/7Bttv5axS5IiHoLaVNHeQ==}
     dev: true
 
   /postcss/8.4.19:
