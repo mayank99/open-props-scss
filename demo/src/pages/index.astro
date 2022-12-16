@@ -8,14 +8,14 @@
 	@use 'open-props-scss' as op;
 
 	:root {
-		font-family: op.$fontSans;
+		font-family: op.$font-sans;
 
-		--page-bg: #{op.$gray2};
-		--page-text: #{op.$gray9};
+		--page-bg: #{op.$gray-2};
+		--page-text: #{op.$gray-9};
 
 		@media (prefers-color-scheme: dark) {
-			--page-bg: #{op.$gray9};
-			--page-text: #{op.$gray1};
+			--page-bg: #{op.$gray-9};
+			--page-text: #{op.$gray-1};
 		}
 
 		background-color: var(--page-bg);

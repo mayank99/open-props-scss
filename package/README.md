@@ -1,6 +1,6 @@
 # open-props-scss
 
-**Problem**: [Open Props](https://open-props.style/) is super awesome but it's all runtime unless you use JIT. Sometimes you just want to use a color or two without bringing in the whole thing or configuring anything.
+**Problem**: [Open Props](https://open-props.style/) is super awesome but it's all runtime unless you use postcss-jit-props. Sometimes you just want to use a color or two without bringing in the whole thing or configuring anything.
 
 **Solution**: Sass variables! Import the whole thing, use only what you need, the rest will get compiled away.
 
@@ -18,11 +18,11 @@ Import the package under a namespace:
 @use 'open-props-scss' as op;
 ```
 
-And start using the props! The names are all camelCase by convention. You can see the full list of variables on [unpkg](https://unpkg.com/open-props-scss).
+And start using the props! The names all follow the same naming convention as open props CSS variables, except the `--` is replaced with `$`. You can see the full list of variables on [unpkg](https://unpkg.com/open-props-scss).
 
 ```scss
 body {
-  font-family: op.$fontSans;
+  font-family: op.$font-sans;
 }
 ```
 
@@ -30,12 +30,12 @@ A common workflow is to assign open props to your own custom properties. This re
 
 ```scss
 :root {
-  --page-bg: #{op.$gray2};
+  --page-bg: #{op.$gray-2};
   --page-text: #{op.$gray9};
 
   @media (prefers-color-scheme: dark) {
-    --page-bg: #{op.$gray9};
-    --page-text: #{op.$gray1};
+    --page-bg: #{op.$gray-9};
+    --page-text: #{op.$gray-1};
   }
 
   background-color: var(--page-bg);
