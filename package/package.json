@@ -1,7 +1,12 @@
 {
 	"name": "open-props-scss",
+	"type": "module",
 	"version": "0.2.0",
 	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/mayank99/open-props-scss.git"
+	},
 	"main": "index.scss",
 	"files": [
 		"index.scss"
