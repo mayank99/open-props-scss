@@ -1,6 +1,6 @@
 # open-props-scss
 
-**Problem**: [Open Props](https://open-props.style/) is super awesome but it's all runtime unless you use postcss-jit-props. Sometimes you just want to use a color or two without bringing in the whole thing or configuring anything.
+**Problem**: [Open Props](https://open-props.style/) is super awesome but it's all runtime unless you use [postcss-jit-props](https://github.com/GoogleChromeLabs/postcss-jit-props). Sometimes you just want to use a color or two without bringing in the whole thing or configuring anything.
 
 **Solution**: Sass variables! Import the whole thing, use only what you need, the rest will get compiled away.
 
