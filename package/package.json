@@ -15,7 +15,8 @@
 		".": "./index.scss"
 	},
 	"scripts": {
-		"build": "node ./generateScss.mjs"
+		"build": "node ./generateScss.mjs",
+		"dev": "node --watch ./generateScss.mjs"
 	},
 	"devDependencies": {
 		"open-props": "^1.5.1",
