@@ -43,14 +43,14 @@ Object.entries({
 	if (key.includes('@')) {
 		return;
 	}
-	key = key.slice(2); // remove -- from beginning
-	generatedScss += `$${key}: ${value};\n`;
+	key = key.replace('--', '$');
+	generatedScss += `${key}: ${value};\n`;
 });
 
 Object.keys(CustomMedia).forEach((queryName) => {
 	const processedQuery = customMediaHelper.process(queryName);
-	queryName = queryName.slice(2); // remove -- from beginning
-	generatedScss += `$${queryName}: '${processedQuery}';\n`;
+	queryName = queryName.replace('--', '$');
+	generatedScss += `${queryName}: '${processedQuery}';\n`;
 });
 
 const outFile = path.join(__dirname, 'index.scss');
