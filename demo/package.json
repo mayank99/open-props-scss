@@ -3,12 +3,13 @@
 	"version": "0.1.0",
 	"type": "module",
 	"devDependencies": {
-		"astro": "~1.6.13",
+		"astro": "^1.7.1",
 		"open-props-scss": "*",
-		"sass": "^1.56.1"
+		"sass": "^1.57.0"
 	},
 	"scripts": {
 		"dev": "astro dev",
-		"build": "astro build"
+		"build": "astro build",
+		"preview": "astro preview"
 	}
 }

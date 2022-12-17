@@ -12,13 +12,13 @@ importers:
 
   demo:
     specifiers:
-      astro: ~1.6.13
+      astro: ^1.7.1
       open-props-scss: '*'
-      sass: ^1.56.1
+      sass: ^1.57.0
     devDependencies:
-      astro: 1.6.13_sass@1.56.1
+      astro: 1.7.1_sass@1.57.0
       open-props-scss: link:../package
-      sass: 1.56.1
+      sass: 1.57.0
 
   package:
     specifiers:
@@ -42,6 +42,10 @@ packages:
 
   /@astrojs/compiler/0.29.19:
     resolution: {integrity: sha512-lvPpoOA6Fc1NpJrPT65ZOhhFieYkiBds9wzOhWX55lXMUpNPu5CUxqzgDAkNSTIoXHZxkxHfi+6EpFNnRZBBYQ==}
+    dev: true
+
+  /@astrojs/compiler/0.31.1:
+    resolution: {integrity: sha512-HgjKVwFZ3LwKnGv8gI0J6MhIniUyKwSmGwo7pTDTn14iwfqovfgzVPeJ0+KFpuKBbB4z1lsFNbD/c1WXZyKz6A==}
     dev: true
 
   /@astrojs/language-server/0.28.3:
@@ -692,12 +696,12 @@ packages:
       tslib: 2.4.0
     dev: true
 
-  /astro/1.6.13_sass@1.56.1:
-    resolution: {integrity: sha512-26Ip+7iCdHiK4FQokEWNYTcVDkJ76KLwlzUsuzLck8QBiUFQQUm9fs5nITHDI06k1EYfODYPH81xqZavXlC3Hg==}
+  /astro/1.7.1_sass@1.57.0:
+    resolution: {integrity: sha512-ENfHAm8/zYPgO5G1KJtCzt+hnTJaYdfjYqFWBB9PcBdxlHOOQvOd1zWCVX+uOvwKe8+ASUHXyyyULh3qlB5UUQ==}
     engines: {node: ^14.18.0 || >=16.12.0, npm: '>=6.14.0'}
     hasBin: true
     dependencies:
-      '@astrojs/compiler': 0.29.19
+      '@astrojs/compiler': 0.31.1
       '@astrojs/language-server': 0.28.3
       '@astrojs/markdown-remark': 1.1.3
       '@astrojs/telemetry': 1.0.1
@@ -719,8 +723,9 @@ packages:
       cookie: 0.5.0
       debug: 4.3.4
       deepmerge-ts: 4.2.2
+      devalue: 4.2.0
       diff: 5.1.0
-      es-module-lexer: 0.10.5
+      es-module-lexer: 1.1.0
       execa: 6.1.0
       fast-glob: 3.2.12
       github-slugger: 1.4.0
@@ -729,7 +734,7 @@ packages:
       html-escaper: 3.0.3
       import-meta-resolve: 2.1.0
       kleur: 4.1.5
-      magic-string: 0.25.9
+      magic-string: 0.27.0
       mime: 3.0.0
       ora: 6.1.2
       path-browserify: 1.0.1
@@ -753,7 +758,7 @@ packages:
       typescript: 4.8.4
       unist-util-visit: 4.1.1
       vfile: 5.3.5
-      vite: 3.2.5_sass@1.56.1
+      vite: 3.2.5_sass@1.57.0
       vitefu: 0.2.2_vite@3.2.5
       yargs-parser: 21.1.1
       zod: 3.19.1
@@ -1038,6 +1043,10 @@ packages:
     resolution: {integrity: sha512-T0NIuQpnTvFDATNuHN5roPwSBG83rFsuO+MXXH9/3N1eFbn4wcPjttvjMLEPWJ0RGUYgQE7cGgS3tNxbqCGM7g==}
     dev: true
 
+  /devalue/4.2.0:
+    resolution: {integrity: sha512-mbjoAaCL2qogBKgeFxFPOXAUsZchircF+B/79LD4sHH0+NHfYm8gZpQrskKDn5gENGt35+5OI1GUF7hLVnkPDw==}
+    dev: true
+
   /diff/5.1.0:
     resolution: {integrity: sha512-D+mk+qE8VC/PAUrlAU34N+VfXev0ghe5ywmpqrawphmVZc1bEfn56uo9qpyGp1p4xpzOHkSW4ztBd6L7Xx4ACw==}
     engines: {node: '>=0.3.1'}
@@ -1075,8 +1084,8 @@ packages:
     resolution: {integrity: sha512-L18DaJsXSUk2+42pv8mLs5jJT2hqFkFE4j21wOmgbUqsZ2hL72NsUU785g9RXgo3s0ZNgVl42TiHp3ZtOv/Vyg==}
     dev: true
 
-  /es-module-lexer/0.10.5:
-    resolution: {integrity: sha512-+7IwY/kiGAacQfY+YBhKMvEmyAJnw5grTUgjG85Pe7vcUI/6b7pZjZG8nQ7+48YhzEAEqrEgD2dCz/JIK+AYvw==}
+  /es-module-lexer/1.1.0:
+    resolution: {integrity: sha512-fJg+1tiyEeS8figV+fPcPpm8WqJEflG3yPU0NOm5xMvrNkuiy7HzX/Ljng4Y0hAoiw4/3hQTCFYw+ub8+a2pRA==}
     dev: true
 
   /es6-error/4.1.1:
@@ -2178,10 +2187,11 @@ packages:
       yallist: 4.0.0
     dev: true
 
-  /magic-string/0.25.9:
-    resolution: {integrity: sha512-RmF0AsMzgt25qzqqLc1+MbHmhdx0ojF2Fvs4XnOqz2ZOBXzzkEwc/dJQZCYHAn7v1jbVOjAZfK8msRn4BxO4VQ==}
+  /magic-string/0.27.0:
+    resolution: {integrity: sha512-8UnnX2PeRAPZuN12svgR9j7M1uWMovg/CEnIwIG0LFkXSJJe4PdfUGiTGl8V9bsBHFUtfVINcSyYxd7q+kx9fA==}
+    engines: {node: '>=12'}
     dependencies:
-      sourcemap-codec: 1.4.8
+      '@jridgewell/sourcemap-codec': 1.4.14
     dev: true
 
   /markdown-table/3.0.2:
@@ -3165,6 +3175,16 @@ packages:
       source-map-js: 1.0.2
     dev: true
 
+  /sass/1.57.0:
+    resolution: {integrity: sha512-IZNEJDTK1cF5B1cGA593TPAV/1S0ysUDxq9XHjX/+SMy0QfUny+nfUsq5ZP7wWSl4eEf7wDJcEZ8ABYFmh3m/w==}
+    engines: {node: '>=12.0.0'}
+    hasBin: true
+    dependencies:
+      chokidar: 3.5.3
+      immutable: 4.1.0
+      source-map-js: 1.0.2
+    dev: true
+
   /section-matter/1.0.0:
     resolution: {integrity: sha512-vfD3pmTzGpufjScBh50YHKzEu2lxBWhVEHsNGoEXmCmn2hKGfeNLYMzCJpe8cD7gqX7TJluOVpBkAequ6dgMmA==}
     engines: {node: '>=4'}
@@ -3252,11 +3272,6 @@ packages:
   /source-map/0.7.4:
     resolution: {integrity: sha512-l3BikUxvPOcn5E74dZiq5BGsTb5yEwhaTSzccU6t4sDOH8NWJCstKO5QT2CvtFoK6F0saL7p9xHAqHOlCPJygA==}
     engines: {node: '>= 8'}
-    dev: true
-
-  /sourcemap-codec/1.4.8:
-    resolution: {integrity: sha512-9NykojV5Uih4lgo5So5dtw+f0JgJX30KCNI8gwhz2J9A15wD0Ml6tjHKwf6fTSa6fAdVBdZeNOs9eJ71qCk8vA==}
-    deprecated: Please use @jridgewell/sourcemap-codec instead
     dev: true
 
   /space-separated-tokens/2.0.1:
@@ -3648,7 +3663,7 @@ packages:
       vfile-message: 3.1.2
     dev: true
 
-  /vite/3.2.5_sass@1.56.1:
+  /vite/3.2.5_sass@1.57.0:
     resolution: {integrity: sha512-4mVEpXpSOgrssFZAOmGIr85wPHKvaDAcXqxVxVRZhljkJOMZi1ibLibzjLHzJvcok8BMguLc7g1W6W/GqZbLdQ==}
     engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
@@ -3677,7 +3692,7 @@ packages:
       postcss: 8.4.19
       resolve: 1.22.1
       rollup: 2.79.1
-      sass: 1.56.1
+      sass: 1.57.0
     optionalDependencies:
       fsevents: 2.3.2
     dev: true
@@ -3690,7 +3705,7 @@ packages:
       vite:
         optional: true
     dependencies:
-      vite: 3.2.5_sass@1.56.1
+      vite: 3.2.5_sass@1.57.0
     dev: true
 
   /vscode-css-languageservice/6.1.1:
