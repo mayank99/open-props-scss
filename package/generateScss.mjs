@@ -14,9 +14,9 @@ import Zindex from 'open-props/src/zindex';
 // import Media from 'open-props/src/media';
 // import Animations from 'open-props/src/animations';
 
-import fs from 'fs/promises';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
