@@ -31,7 +31,7 @@ A common workflow is to assign open props to your own custom properties. This re
 ```scss
 :root {
   --page-bg: #{op.$gray-2};
-  --page-text: #{op.$gray9};
+  --page-text: #{op.$gray-9};
 
   @media (op.$OSdark) {
     --page-bg: #{op.$gray-9};
@@ -50,7 +50,7 @@ You can also import the props into the global scope to use them without a prefix
 
 :root {
   --page-bg: #{$gray-2};
-  --page-text: #{$gray9};
+  --page-text: #{$gray09};
 
   @media ($OSdark) {
     --page-bg: #{$gray-9};
