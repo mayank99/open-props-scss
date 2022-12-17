@@ -3,6 +3,16 @@
 	"type": "module",
 	"version": "0.3.0",
 	"license": "MIT",
+	"author": {
+		"name": "Mayank"
+	},
+	"keywords": [
+		"css",
+		"open props",
+		"sass",
+		"scss",
+		"variables"
+	],
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/mayank99/open-props-scss.git"
