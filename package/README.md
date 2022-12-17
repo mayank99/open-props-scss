@@ -4,6 +4,8 @@
 
 **Solution**: Sass variables! Import the whole thing, use only what you need, the rest will get compiled away. No need for any extra configuration.
 
+Try it on [Stackblitz](https://stackblitz.com/github/mayank99/open-props-scss/tree/main/demo?file=src%2Fpages%2Findex.astro).
+
 ## Installation
 
 ```
