@@ -43,6 +43,22 @@ A common workflow is to assign open props to your own custom properties. This re
 }
 ```
 
+You can also import the props into the global scope to use them without a prefix. Be careful when doing this as it might cause conflicts with some of your own variables.
+
+```scss
+@use 'open-props-scss' as *;
+
+:root {
+  --page-bg: #{$gray-2};
+  --page-text: #{$gray9};
+
+  @media ($OSdark) {
+    --page-bg: #{$gray-9};
+    --page-text: #{$gray-1};
+  }
+}
+```
+
 ## Acknowledgements
 
 All I did is convert the tokens to Sass variables. The credit for the actual thing goes to [Adam Argyle](https://github.com/argyleink) for making Open Props. 💜
