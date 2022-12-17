@@ -11,14 +11,17 @@ import Svg from 'open-props/src/svg';
 import Zindex from 'open-props/src/zindex';
 // import MaskEdges from 'open-props/src/masks.edges';
 // import MaskCornerCuts from 'open-props/src/masks.corner-cuts';
-// import Media from 'open-props/src/media';
+import { CustomMedia } from 'open-props/esm/media';
 // import Animations from 'open-props/src/animations';
 
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+import { CustomMediaHelper } from './processCustomMedia.mjs';
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const customMediaHelper = new CustomMediaHelper(CustomMedia);
 
 let generatedScss = '';
 
@@ -36,13 +39,18 @@ Object.entries({
 	...Zindex,
 	// ...MaskEdges,
 	// ...MaskCornerCuts,
-	// ...Media,
 }).forEach(([key, value]) => {
 	if (key.includes('@')) {
 		return;
 	}
 	key = key.slice(2); // remove -- from beginning
 	generatedScss += `$${key}: ${value};\n`;
+});
+
+Object.keys(CustomMedia).forEach((queryName) => {
+	const processedQuery = customMediaHelper.process(queryName);
+	queryName = queryName.slice(2); // remove -- from beginning
+	generatedScss += `$${queryName}: '${processedQuery}';\n`;
 });
 
 const outFile = path.join(__dirname, 'index.scss');
