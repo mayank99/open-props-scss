@@ -33,7 +33,7 @@ A common workflow is to assign open props to your own custom properties. This re
   --page-bg: #{op.$gray-2};
   --page-text: #{op.$gray9};
 
-  @media (prefers-color-scheme: dark) {
+  @media (op.$OSdark) {
     --page-bg: #{op.$gray-9};
     --page-text: #{op.$gray-1};
   }
