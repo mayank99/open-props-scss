@@ -30,7 +30,7 @@
 	},
 	"devDependencies": {
 		"lightningcss": "^1.17.1",
-		"open-props": "^1.5.1",
+		"open-props": "^1.5.3",
 		"sass": "^1.56.1"
 	}
 }

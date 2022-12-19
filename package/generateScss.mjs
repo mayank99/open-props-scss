@@ -9,9 +9,9 @@ import Easings from 'open-props/src/easing';
 import Gradients from 'open-props/src/gradients';
 import Svg from 'open-props/src/svg';
 import Zindex from 'open-props/src/zindex';
-// import MaskEdges from 'open-props/src/masks.edges';
-// import MaskCornerCuts from 'open-props/src/masks.corner-cuts';
-import { CustomMedia } from 'open-props/esm/media';
+import MaskEdges from 'open-props/src/masks.edges';
+import MaskCornerCuts from 'open-props/src/masks.corner-cuts';
+import { CustomMedia } from 'open-props/src/media';
 // import Animations from 'open-props/src/animations';
 
 import fs from 'node:fs/promises';
@@ -37,8 +37,8 @@ Object.entries({
 	...Gradients,
 	...Svg,
 	...Zindex,
-	// ...MaskEdges,
-	// ...MaskCornerCuts,
+	...MaskEdges,
+	...MaskCornerCuts,
 }).forEach(([key, value]) => {
 	if (key.includes('@')) {
 		return;

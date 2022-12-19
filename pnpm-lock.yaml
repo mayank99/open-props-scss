@@ -23,11 +23,11 @@ importers:
   package:
     specifiers:
       lightningcss: ^1.17.1
-      open-props: ^1.5.1
+      open-props: ^1.5.3
       sass: ^1.56.1
     devDependencies:
       lightningcss: 1.17.1
-      open-props: 1.5.1
+      open-props: 1.5.3
       sass: 1.56.1
 
 packages:
@@ -2755,8 +2755,8 @@ packages:
       mimic-fn: 4.0.0
     dev: true
 
-  /open-props/1.5.1:
-    resolution: {integrity: sha512-FA1T/0neIXWaJToPhS4HjBrgEFOeVOAUls9cOe1ME1BV4G25sIKdRNdZhzNNgOQ2RtfuZCTGtSKVnhjdD4Gzvg==}
+  /open-props/1.5.3:
+    resolution: {integrity: sha512-NzORO2a4Rf/MEo1DBTKxEzJ6ZNx9JswnvwjSKK9QOntg28AoxXt2LdpwfJ1dEQE4mkTdyaWkzwbtPg1yKpKFgw==}
     dev: true
 
   /open/8.4.0:
