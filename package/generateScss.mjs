@@ -23,14 +23,13 @@ import { CustomMediaHelper } from './CustomMediaHelper.mjs';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const customMediaHelper = new CustomMediaHelper(CustomMedia);
 
-let generatedScss = '';
+let generatedScss = '@use "sass:list";\n';
 
 Object.entries({
 	...Sizes,
 	...Colors,
 	...ColorsHSL,
 	...Shadows,
-	...Aspects,
 	...Borders,
 	...Fonts,
 	...Easings,
@@ -44,6 +43,14 @@ Object.entries({
 		return;
 	}
 	key = key.replace('--', '$');
+	generatedScss += `${key}: ${value};\n`;
+});
+
+Object.entries(Aspects).forEach(([key, value]) => {
+	key = key.replace('--', '$');
+	if (value.includes('/')) {
+		value = `list.slash(${value.replace('/', ',')})`; // fix sass deprecation warning: https://sass-lang.com/documentation/breaking-changes/slash-div
+	}
 	generatedScss += `${key}: ${value};\n`;
 });
 
