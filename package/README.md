@@ -52,7 +52,7 @@ You can also import the props into the global scope to use them without a prefix
 
 :root {
   --page-bg: #{$gray-2};
-  --page-text: #{$gray09};
+  --page-text: #{$gray-9};
 
   @media ($OSdark) {
     --page-bg: #{$gray-9};
