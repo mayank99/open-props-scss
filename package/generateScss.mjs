@@ -23,42 +23,71 @@ import { CustomMediaHelper } from './CustomMediaHelper.mjs';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const customMediaHelper = new CustomMediaHelper(CustomMedia);
 
-let generatedScss = '@use "sass:list";\n';
+const openPropFiles = {
+  CustomMedia,
+  Sizes,
+  Colors,
+  ColorsHSL,
+  Shadows,
+  Aspects,
+  Borders,
+  Fonts,
+  Easings,
+  Gradients,
+  Svg,
+  Zindex,
+  MaskEdges,
+  MaskCornerCuts,
+};
 
-Object.entries({
-	...Sizes,
-	...Colors,
-	...ColorsHSL,
-	...Shadows,
-	...Borders,
-	...Fonts,
-	...Easings,
-	...Gradients,
-	...Svg,
-	...Zindex,
-	...MaskEdges,
-	...MaskCornerCuts,
-}).forEach(([key, value]) => {
-	if (key.includes('@')) {
-		return;
-	}
-	key = key.replace('--', '$');
-	generatedScss += `${key}: ${value};\n`;
+const writeSCSSModule = async (moduleName, content) => {
+  const outFile = path.join(__dirname, `${moduleName}.scss`);
+  await fs.writeFile(outFile, content, { encoding: 'utf-8' });
+};
+
+const generateSCSSModule = async (moduleName, importObj) => {
+  let generatedScss = '';
+  
+  if (moduleName.toLowerCase() === 'aspects') {
+    generatedScss = '@use "sass:list";\n';
+    
+    Object.entries(importObj).forEach(([key, value]) => {
+      key = key.replace('--', '$');
+      if (value.includes('/')) {
+        value = `list.slash(${value.replace('/', ',')})`; // fix sass deprecation warning: https://sass-lang.com/documentation/breaking-changes/slash-div
+      }
+      generatedScss += `${key}: ${value};\n`;
+    });
+    
+  } else if (moduleName.toLowerCase() === 'custommedia') {
+    Object.keys(importObj).forEach((queryName) => {
+      const processedQuery = customMediaHelper.process(queryName);
+      queryName = queryName.replace('--', '$');
+      generatedScss += `${queryName}: '${processedQuery}';\n`;
+    });
+    
+  } else {
+    Object.entries(importObj).forEach(([key, value]) => {
+      if (key.includes('@')) {
+        return;
+      }
+      key = key.replace('--', '$');
+      generatedScss += `${key}: ${value};\n`;
+    });
+  }
+
+  await writeSCSSModule(moduleName, generatedScss);
+};
+
+Object.entries(openPropFiles).forEach(([moduleName, importObj]) => {
+  generateSCSSModule(moduleName.toLowerCase(), importObj);
 });
 
-Object.entries(Aspects).forEach(([key, value]) => {
-	key = key.replace('--', '$');
-	if (value.includes('/')) {
-		value = `list.slash(${value.replace('/', ',')})`; // fix sass deprecation warning: https://sass-lang.com/documentation/breaking-changes/slash-div
-	}
-	generatedScss += `${key}: ${value};\n`;
-});
+// Generate index.scss
+let indexScss = '';
+for (const moduleName in openPropFiles) {
+  indexScss += `@forward '${moduleName.toLowerCase()}';\n`;
+}
 
-Object.keys(CustomMedia).forEach((queryName) => {
-	const processedQuery = customMediaHelper.process(queryName);
-	queryName = queryName.replace('--', '$');
-	generatedScss += `${queryName}: '${processedQuery}';\n`;
-});
-
-const outFile = path.join(__dirname, 'index.scss');
-await fs.writeFile(outFile, generatedScss, { encoding: 'utf-8' });
+const indexOutFile = path.join(__dirname, 'index.scss');
+await fs.writeFile(indexOutFile, indexScss, { encoding: 'utf-8' });
