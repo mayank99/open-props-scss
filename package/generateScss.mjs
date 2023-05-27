@@ -1,6 +1,6 @@
 import Sizes from 'open-props/src/sizes';
 import Colors from 'open-props/src/colors';
-import ColorsHSL from 'open-props/src/colors-hsl';
+import ColorsHsl from 'open-props/src/colors-hsl';
 import { StaticShadows as Shadows } from 'open-props/src/shadows';
 import Aspects from 'open-props/src/aspects';
 import Borders from 'open-props/src/borders';
@@ -9,9 +9,9 @@ import Easings from 'open-props/src/easing';
 import Gradients from 'open-props/src/gradients';
 import Svg from 'open-props/src/svg';
 import Zindex from 'open-props/src/zindex';
-import MaskEdges from 'open-props/src/masks.edges';
-import MaskCornerCuts from 'open-props/src/masks.corner-cuts';
-import { CustomMedia } from 'open-props/src/media';
+import MasksEdges from 'open-props/src/masks.edges';
+import MasksCornerCuts from 'open-props/src/masks.corner-cuts';
+import { CustomMedia as Media } from 'open-props/src/media';
 // import Animations from 'open-props/src/animations';
 
 import fs from 'node:fs/promises';
@@ -24,10 +24,10 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const customMediaHelper = new CustomMediaHelper(CustomMedia);
 
 const openPropFiles = {
-  CustomMedia,
+  Media,
   Sizes,
   Colors,
-  ColorsHSL,
+  ColorsHsl,
   Shadows,
   Aspects,
   Borders,
@@ -36,8 +36,8 @@ const openPropFiles = {
   Gradients,
   Svg,
   Zindex,
-  MaskEdges,
-  MaskCornerCuts,
+  MasksEdges,
+  MasksCornerCuts,
 };
 
 const writeSCSSModule = async (moduleName, content) => {
@@ -59,7 +59,7 @@ const generateSCSSModule = async (moduleName, importObj) => {
       generatedScss += `${key}: ${value};\n`;
     });
     
-  } else if (moduleName.toLowerCase() === 'custommedia') {
+  } else if (moduleName.toLowerCase() === 'media') {
     Object.keys(importObj).forEach((queryName) => {
       const processedQuery = customMediaHelper.process(queryName);
       queryName = queryName.replace('--', '$');
@@ -79,14 +79,22 @@ const generateSCSSModule = async (moduleName, importObj) => {
   await writeSCSSModule(moduleName, generatedScss);
 };
 
+function convertToKebabCase(str) {
+  return str.replace(/[A-Z]/g, (letter, index) => {
+    return index === 0 ? letter.toLowerCase() : '-' + letter.toLowerCase();
+  }).replace(/masks-/, 'masks.');
+}
+
 Object.entries(openPropFiles).forEach(([moduleName, importObj]) => {
-  generateSCSSModule(moduleName.toLowerCase(), importObj);
+  const kebabCaseModuleName = convertToKebabCase(moduleName);
+  generateSCSSModule(kebabCaseModuleName, importObj);
 });
 
 // Generate index.scss
 let indexScss = '';
 for (const moduleName in openPropFiles) {
-  indexScss += `@forward '${moduleName.toLowerCase()}';\n`;
+  const kebabCaseModuleName = convertToKebabCase(moduleName);
+  indexScss += `@forward '${kebabCaseModuleName}';\n`;
 }
 
 const indexOutFile = path.join(__dirname, 'index.scss');
