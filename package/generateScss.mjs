@@ -21,7 +21,7 @@ import { fileURLToPath } from 'node:url';
 import { CustomMediaHelper } from './CustomMediaHelper.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const customMediaHelper = new CustomMediaHelper(CustomMedia);
+const customMediaHelper = new CustomMediaHelper(Media);
 
 const openPropFiles = {
   Media,
