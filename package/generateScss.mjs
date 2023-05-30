@@ -24,20 +24,20 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const customMediaHelper = new CustomMediaHelper(Media);
 
 const openPropFiles = {
-  Media,
-  Sizes,
-  Colors,
-  ColorsHsl,
-  Shadows,
-  Aspects,
-  Borders,
-  Fonts,
-  Easings,
-  Gradients,
-  Svg,
-  Zindex,
-  MasksEdges,
-  MasksCornerCuts,
+  'media': Media,
+  'sizes': Sizes,
+  'colors': Colors,
+  'colors-hsl': ColorsHsl,
+  'shadows': Shadows,
+  'aspects': Aspects,
+  'borders': Borders,
+  'fonts': Fonts,
+  'easings': Easings,
+  'gradients': Gradients,
+  'svg': Svg,
+  'zindex': Zindex,
+  'masks.edges': MasksEdges,
+  'masks.corner-cuts': MasksCornerCuts,
 };
 
 const writeSCSSModule = async (moduleName, content) => {
@@ -79,22 +79,15 @@ const generateSCSSModule = async (moduleName, importObj) => {
   await writeSCSSModule(moduleName, generatedScss);
 };
 
-function convertToKebabCase(str) {
-  return str.replace(/[A-Z]/g, (letter, index) => {
-    return index === 0 ? letter.toLowerCase() : '-' + letter.toLowerCase();
-  }).replace(/masks-/, 'masks.');
-}
 
-Object.entries(openPropFiles).forEach(([moduleName, importObj]) => {
-  const kebabCaseModuleName = convertToKebabCase(moduleName);
-  generateSCSSModule(kebabCaseModuleName, importObj);
-});
+for (const [moduleName, importObj] of Object.entries(openPropFiles)) {
+  generateSCSSModule(moduleName, importObj);
+}
 
 // Generate index.scss
 let indexScss = '';
 for (const moduleName in openPropFiles) {
-  const kebabCaseModuleName = convertToKebabCase(moduleName);
-  indexScss += `@forward '${kebabCaseModuleName}';\n`;
+  indexScss += `@forward '${moduleName}';\n`;
 }
 
 const indexOutFile = path.join(__dirname, 'index.scss');
