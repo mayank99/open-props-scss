@@ -32,9 +32,9 @@ body {
 
 Shadows are made available through a `shadow()` function rather than a variable. This allows choosing between light and dark themes, as well as modifying `$shadow-color` and `$shadow-strength` if desired.
 ```scss
---shadow-1-light: op.shadow(1);
---shadow-inner-3-dark: op.shadow('inner-3', dark);
---shadow-5-custom: op.shadow(5, $shadow-color: var(--my-shadow-color));
+box-shadow: op.shadow(1);
+box-shadow: op.shadow('inner-3', dark);
+box-shadow: op.shadow(5, $shadow-color: var(--my-shadow-color));
 ```
 
 ### Custom properties
