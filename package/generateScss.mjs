@@ -91,7 +91,7 @@ const generateSCSSModule = async (moduleName, importObj) => {
         key = key.replace(/$/, '\'');
       }
      
-      value = value.replace(/var\(--(.*?)\)/g, '$$$1');
+      value = value.replace(/var\(--(.*?)\)/g, '$$--$1');
       value = value.replace(/hsl/g, 'Hsl')
       mapKeysValues += `${key}: (${value})`;
       
@@ -102,13 +102,13 @@ const generateSCSSModule = async (moduleName, importObj) => {
     
     generatedScss += `@use 'sass:map';
 
-@function shadow($level, $theme: light, $-shadow-color: null, $-shadow-strength: null) {
-  $shadow-color: $-shadow-color or if($theme == dark, ${darkColor}, ${lightColor});
-  $shadow-strength: $-shadow-strength or if($theme == dark, ${darkStrength}, ${lightStrength});
-    $shadows-map: (
-      ${mapKeysValues}
-    );
-   
+@function shadow($level, $theme: light, $shadow-color: null, $shadow-strength: null) {
+  $--shadow-color: $shadow-color or if($theme == dark, ${darkColor}, if($theme == cssvar, var(--shadow-color), ${lightColor}));
+  $--shadow-strength: $shadow-strength or if($theme == dark, ${darkStrength}, if($theme == cssvar, var(--shadow-color), ${lightStrength}));
+  $shadows-map: (
+    ${mapKeysValues}
+  );
+
   @return map.get($shadows-map, $level);
 }`;
   
