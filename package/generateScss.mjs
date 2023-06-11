@@ -104,7 +104,7 @@ const generateSCSSModule = async (moduleName, importObj) => {
 
 @function shadow($level, $theme: light, $shadow-color: null, $shadow-strength: null) {
   $--shadow-color: $shadow-color or if($theme == dark, ${darkColor}, if($theme == cssvar, var(--shadow-color), ${lightColor}));
-  $--shadow-strength: $shadow-strength or if($theme == dark, ${darkStrength}, if($theme == cssvar, var(--shadow-color), ${lightStrength}));
+  $--shadow-strength: $shadow-strength or if($theme == dark, ${darkStrength}, if($theme == cssvar, var(--shadow-strength), ${lightStrength}));
   $shadows-map: (
     ${mapKeysValues}
   );
