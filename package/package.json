@@ -19,10 +19,11 @@
 	},
 	"main": "index.scss",
 	"files": [
-		"index.scss"
+		"*.scss"
 	],
 	"exports": {
-		".": "./index.scss"
+		".": "./index.scss",
+		"./*": "./*"
 	},
 	"scripts": {
 		"build": "node ./generateScss.mjs",
