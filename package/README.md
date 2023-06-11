@@ -32,8 +32,8 @@ body {
 
 Shadows are made available through a `shadow()` function rather than a variable. This allows choosing between light and dark themes, as well as modifying `$shadow-color` and `$shadow-strength` if desired.
 ```scss
---shadow-1-light: op.shadow(2);
---shadow-inner-3-dark: op.shadow(2, dark);
+--shadow-1-light: op.shadow(1);
+--shadow-inner-3-dark: op.shadow('inner-3', dark);
 --shadow-5-custom: op.shadow(5, $shadow-color: var(--my-shadow-color));
 ```
 
@@ -55,6 +55,8 @@ A common workflow is to assign open props to your own custom properties. This re
   color: var(--page-text);
 }
 ```
+
+### Unprefixed usage
 
 You can also import the props into the global scope to use them without a prefix. Be careful when doing this as it might cause conflicts with some of your own variables.
 
