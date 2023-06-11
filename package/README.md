@@ -20,13 +20,24 @@ Import the package under a namespace:
 @use 'open-props-scss' as op;
 ```
 
-And start using the props! The names all follow the same naming convention as open props CSS variables, except the `--` is replaced with `$`. You can see the full list of variables on [unpkg](https://unpkg.com/open-props-scss).
+And start using the props!
+
+Most of the names follow the same naming convention as open props CSS variables, except the `--` is replaced with `$`. You can find the values of all props by inspecting the scss files on [npm](https://www.npmjs.com/package/open-props-scss?activeTab=code).
 
 ```scss
 body {
   font-family: op.$font-sans;
 }
 ```
+
+Shadows are made available through a `shadow()` function rather than a variable. This allows choosing between light and dark themes, as well as modifying `$shadow-color` and `$shadow-strength` if desired.
+```scss
+--shadow-1-light: op.shadow(2);
+--shadow-inner-3-dark: op.shadow(2, dark);
+--shadow-5-custom: op.shadow(5, $shadow-color: var(--my-shadow-color));
+```
+
+### Custom properties
 
 A common workflow is to assign open props to your own custom properties. This requires interpolating the values inside `#{}`.
 
