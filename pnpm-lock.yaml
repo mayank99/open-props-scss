@@ -1,4 +1,8 @@
-lockfileVersion: '6.0'
+lockfileVersion: '6.1'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
 
 importers:
 
@@ -29,8 +33,8 @@ importers:
         specifier: ^1.21.0
         version: 1.21.0
       open-props:
-        specifier: ^1.5.8
-        version: 1.5.8
+        specifier: ^1.5.9
+        version: 1.5.9
       sass:
         specifier: ^1.63.3
         version: 1.63.3
@@ -2336,8 +2340,8 @@ packages:
       mimic-fn: 4.0.0
     dev: true
 
-  /open-props@1.5.8:
-    resolution: {integrity: sha512-pE9oKg+4rDrKNJpHNSP1ensgMz41YW5pPCHExd4P12595gdObMmiO1OhTvXG0t7inRS54GhyZr5jm+28XzapEg==}
+  /open-props@1.5.9:
+    resolution: {integrity: sha512-7cY+O+QPiLFcm1a/nnkSK7CHLIW55XBwnnKYS2ajGcWw/xmY990JkgPzYFbohOODyCGM6oJZ+XzRJF7207QqiA==}
     dev: true
 
   /open@8.4.0:
