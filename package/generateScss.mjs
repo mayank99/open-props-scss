@@ -13,6 +13,8 @@ import MasksEdges from 'open-props/src/masks.edges';
 import MasksCornerCuts from 'open-props/src/masks.corner-cuts';
 import { CustomMedia as Media } from 'open-props/src/media';
 // import Animations from 'open-props/src/animations';
+import OklchColors from 'open-props/src/props.colors-oklch.js';
+import OklchHues from 'open-props/src/props.colors-oklch-hues.js';
 
 import fs from 'node:fs/promises';
 import path from 'node:path';
