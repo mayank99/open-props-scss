@@ -42,11 +42,6 @@ const openPropFiles = {
   'masks.corner-cuts': MasksCornerCuts,
 };
 
-const hdColorFiles = {
- 'oklch-colors': OklchColors,
- 'oklch-hues': OklchHues,
-};
-
 const writeSCSSModule = async (moduleName, content) => {
   const outFile = path.join(__dirname, `${moduleName}.scss`);
   await fs.writeFile(outFile, content, { encoding: 'utf-8' });
@@ -137,24 +132,20 @@ const generateSCSSModule = async (moduleName, importObj) => {
 };
 
 // Seperate scss module for colors-oklch.scss
-const generateOklchScss = async (importObj) => {
+const generateOklchScss = async () => {
   let oklchScss = '';
-  const { 'oklch-colors': oklchColors, 'oklch-hues': oklchHues } = importObj;
 
-  for (const [hueKey, hueValue] of Object.entries(oklchHues)) {
+  for (const [hueKey, hueValue] of Object.entries(OklchHues)) {
     const hueName = hueKey.replace('--hue-', '');
 
-    for (let i = 0; i <= 15; i++) {
-      const colorKey = `--color-${i}`;
-      const colorValue = oklchColors[colorKey].replace(/\bvar\(--color-hue,\s*0\)/g, `${hueValue}`);
-    
-      oklchScss += `$${hueName}-${i}: ${colorValue};\n`;
+    for (const [colorKey, colorValue] of Object.entries(OklchColors)) {
+      if (colorKey === '--color-bright') {
+        oklchScss += `$${hueName}-bright: ${colorValue.replace(/\bvar\(--color-hue,\s*0\)/g, `${hueValue}`)};\n`;
+      } else if (colorKey.includes('--color-')) {
+        const colorIndex = colorKey.replace('--color-', '');
+        oklchScss += `$${hueName}-${colorIndex}: ${colorValue.replace(/\bvar\(--color-hue,\s*0\)/g, `${hueValue}`)};\n`;
+      }
     }
-
-    const brightKey = '--color-bright';
-    const brightValue = oklchColors[brightKey].replace(/\bvar\(--color-hue,\s*0\)/g, `${hueValue}`);
-
-    oklchScss += `$${hueName}-bright: ${brightValue};\n`;
   }
 
   await writeSCSSModule('colors-oklch', oklchScss);
@@ -165,7 +156,7 @@ for (const [moduleName, importObj] of Object.entries(openPropFiles)) {
 }
 
 // Generate colors-oklch.scss
-generateOklchScss(hdColorFiles);
+generateOklchScss(OklchColors);
 
 // Generate index.scss
 let indexScss = '';
