@@ -4,6 +4,9 @@
 		"build": {
 			"dependsOn": ["^build"]
 		},
+		"open-props-scss#build": {
+			"outputs": ["*.scss"]
+		},
 		"dev": {
 			"cache": false
 		}
