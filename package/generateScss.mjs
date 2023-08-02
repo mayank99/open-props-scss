@@ -26,83 +26,86 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const customMediaHelper = new CustomMediaHelper(Media);
 
 const openPropFiles = {
-  'media': Media,
-  'sizes': Sizes,
-  'colors': Colors,
-  'colors-hsl': ColorsHsl,
-  'shadows': Shadows,
-  'aspects': Aspects,
-  'borders': Borders,
-  'fonts': Fonts,
-  'easings': Easings,
-  'gradients': Gradients,
-  'svg': Svg,
-  'zindex': Zindex,
-  'masks.edges': MasksEdges,
-  'masks.corner-cuts': MasksCornerCuts,
+	media: Media,
+	sizes: Sizes,
+	colors: Colors,
+	'colors-hsl': ColorsHsl,
+	shadows: Shadows,
+	aspects: Aspects,
+	borders: Borders,
+	fonts: Fonts,
+	easings: Easings,
+	gradients: Gradients,
+	svg: Svg,
+	zindex: Zindex,
+	'masks.edges': MasksEdges,
+	'masks.corner-cuts': MasksCornerCuts,
 };
 
 const writeSCSSModule = async (moduleName, content) => {
-  const outFile = path.join(__dirname, `${moduleName}.scss`);
-  await fs.writeFile(outFile, content, { encoding: 'utf-8' });
+	const outFile = path.join(__dirname, `${moduleName}.scss`);
+	await fs.writeFile(outFile, content, { encoding: 'utf-8' });
 };
 
 const generateSCSSModule = async (moduleName, importObj) => {
-  let generatedScss = '';
-  
-  // aspects.scss
-  if (moduleName.toLowerCase() === 'aspects') {
-    generatedScss = '@use "sass:list";\n';
-    
-    Object.entries(importObj).forEach(([key, value]) => {
-      key = key.replace('--', '$');
-      if (value.includes('/')) {
-        value = `list.slash(${value.replace('/', ',')})`; // fix sass deprecation warning: https://sass-lang.com/documentation/breaking-changes/slash-div
-      }
-      generatedScss += `${key}: ${value};\n`;
-    });
-  
-  // media.scss
-  } else if (moduleName.toLowerCase() === 'media') {
-    Object.keys(importObj).forEach((queryName) => {
-      const processedQuery = customMediaHelper.process(queryName);
-      queryName = queryName.replace('--', '$');
-      generatedScss += `${queryName}: '${processedQuery}';\n`;
-    });
-  
-  // shadows.scss
-  } else if (moduleName.toLowerCase() === 'shadows') {
-    
-    let mapKeysValues = '';
-    const lightColor = Shadows['--shadow-color'];
-    const lightStrength = Shadows['--shadow-strength'];
-    const darkColor = Shadows['--shadow-color-@media:dark'];
-    const darkStrength = Shadows['--shadow-strength-@media:dark'];
-    const entries = Object.entries(importObj);
-    
-    for (let index = 0; index < entries.length; index++) {
-      let [key, value] = entries[index];
-      
-      if (key == '--shadow-color' || key == '--shadow-strength' || key.includes('@')) {
-        continue; // skip light and dark for the other loops
-      } 
+	let generatedScss = '';
 
-      key = key.replace('--shadow-', '');
-      if (key.includes('--inner-shadow-')) {
-        key = key.replace('--inner-shadow-', '\'inner-');
-        key = key.replace(/$/, '\'');
-      }
-     
-      value = value.replace(/var\(--(.*?)\)/g, '$$--$1');
-      value = value.replace(/hsl/g, 'Hsl')
-      mapKeysValues += `${key}: (${value})`;
-      
-      if (index < entries.length - 1) {
-        mapKeysValues += ',\n '; // Add comma and new line for all entries except the last one
-      }
-    };
-    
-    generatedScss += `@use 'sass:map';
+	// aspects.scss
+	if (moduleName.toLowerCase() === 'aspects') {
+		generatedScss = '@use "sass:list";\n';
+
+		Object.entries(importObj).forEach(([key, value]) => {
+			key = key.replace('--', '$');
+			if (value.includes('/')) {
+				value = `list.slash(${value.replace('/', ',')})`; // fix sass deprecation warning: https://sass-lang.com/documentation/breaking-changes/slash-div
+			}
+			generatedScss += `${key}: ${value};\n`;
+		});
+
+		// media.scss
+	} else if (moduleName.toLowerCase() === 'media') {
+		Object.keys(importObj).forEach((queryName) => {
+			const processedQuery = customMediaHelper.process(queryName);
+			queryName = queryName.replace('--', '$');
+			generatedScss += `${queryName}: '${processedQuery}';\n`;
+		});
+
+		// shadows.scss
+	} else if (moduleName.toLowerCase() === 'shadows') {
+		let mapKeysValues = '';
+		const lightColor = Shadows['--shadow-color'];
+		const lightStrength = Shadows['--shadow-strength'];
+		const darkColor = Shadows['--shadow-color-@media:dark'];
+		const darkStrength = Shadows['--shadow-strength-@media:dark'];
+		const entries = Object.entries(importObj);
+
+		for (let index = 0; index < entries.length; index++) {
+			let [key, value] = entries[index];
+
+			if (
+				key == '--shadow-color' ||
+				key == '--shadow-strength' ||
+				key.includes('@')
+			) {
+				continue; // skip light and dark for the other loops
+			}
+
+			key = key.replace('--shadow-', '');
+			if (key.includes('--inner-shadow-')) {
+				key = key.replace('--inner-shadow-', "'inner-");
+				key = key.replace(/$/, "'");
+			}
+
+			value = value.replace(/var\(--(.*?)\)/g, '$$--$1');
+			value = value.replace(/hsl/g, 'Hsl');
+			mapKeysValues += `${key}: (${value})`;
+
+			if (index < entries.length - 1) {
+				mapKeysValues += ',\n '; // Add comma and new line for all entries except the last one
+			}
+		}
+
+		generatedScss += `@use 'sass:map';
 
 @function shadow($level, $theme: light, $shadow-color: null, $shadow-strength: null) {
   $--shadow-color: $shadow-color or if($theme == dark, ${darkColor}, ${lightColor});
@@ -113,46 +116,47 @@ const generateSCSSModule = async (moduleName, importObj) => {
 
   @return map.get($shadows-map, $level);
 }`;
-  
-  // All other open props
-  } else {
-    Object.entries(importObj).forEach(([key, value]) => {
-      if (key.includes('@')) {
-        return;
-      }
-      key = key.replace('--', '$');
-      if (typeof value === 'string' && value.includes('var(--')) {
-        value = value.replace(/var\(--(.*?)\)/g, '#{$$$1}'); // replace var(--cssvar) with #{$cssvar} when they occur in a value
-      }
-      generatedScss += `${key}: ${value};\n`;
-    });
-  }
 
-  await writeSCSSModule(moduleName, generatedScss);
+		// All other open props
+	} else {
+		Object.entries(importObj).forEach(([key, value]) => {
+			if (key.includes('@')) {
+				return;
+			}
+			key = key.replace('--', '$');
+			if (typeof value === 'string' && value.includes('var(--')) {
+				value = value.replace(/var\(--(.*?)\)/g, '#{$$$1}'); // replace var(--cssvar) with #{$cssvar} when they occur in a value
+			}
+			generatedScss += `${key}: ${value};\n`;
+		});
+	}
+
+	await writeSCSSModule(moduleName, generatedScss);
 };
 
 // Seperate scss module for colors-oklch.scss
 const generateOklchScss = async () => {
-  let oklchScss = '';
+	let oklchScss = '';
 
-  for (const [hueKey, hueValue] of Object.entries(OklchHues)) {
-    const hueName = hueKey.replace('--hue-', '');
+	for (const [hueKey, hueValue] of Object.entries(OklchHues)) {
+		const hueName = hueKey.replace('--hue-', '');
 
-    for (const [colorKey, colorValue] of Object.entries(OklchColors)) {
-      if (colorKey === '--color-bright') {
-        oklchScss += `$${hueName}-bright: ${colorValue.replace(/\bvar\(--color-hue,\s*0\)/g, `${hueValue}`)};\n`;
-      } else if (colorKey.includes('--color-')) {
-        const colorIndex = colorKey.replace('--color-', '');
-        oklchScss += `$${hueName}-${colorIndex}: ${colorValue.replace(/\bvar\(--color-hue,\s*0\)/g, `${hueValue}`)};\n`;
-      }
-    }
-  }
+		for (const [colorKey, colorValue] of Object.entries(OklchColors)) {
+			if (colorKey.includes('--color-')) {
+				const colorIndex = colorKey.replace('--color-', '');
+				oklchScss += `$${hueName}-${colorIndex}: ${colorValue.replace(
+					/\bvar\(--color-hue,\s*0\)/g,
+					`${hueValue}`
+				)};\n`;
+			}
+		}
+	}
 
-  await writeSCSSModule('colors-oklch', oklchScss);
+	await writeSCSSModule('colors-oklch', oklchScss);
 };
 
 for (const [moduleName, importObj] of Object.entries(openPropFiles)) {
-  generateSCSSModule(moduleName, importObj);
+	generateSCSSModule(moduleName, importObj);
 }
 
 // Generate colors-oklch.scss
@@ -161,7 +165,7 @@ generateOklchScss(OklchColors);
 // Generate index.scss
 let indexScss = '';
 for (const moduleName in openPropFiles) {
-  indexScss += `@forward '${moduleName}';\n`;
+	indexScss += `@forward '${moduleName}';\n`;
 }
 
 const indexOutFile = path.join(__dirname, 'index.scss');
