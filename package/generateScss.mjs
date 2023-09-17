@@ -12,7 +12,7 @@ import Zindex from 'open-props/src/zindex';
 import MasksEdges from 'open-props/src/masks.edges';
 import MasksCornerCuts from 'open-props/src/masks.corner-cuts';
 import { CustomMedia as Media } from 'open-props/src/media';
-// import Animations from 'open-props/src/animations';
+import Animations from 'open-props/src/animations';
 import OklchColors from 'open-props/src/props.colors-oklch.js';
 import OklchHues from 'open-props/src/props.colors-oklch-hues.js';
 
@@ -31,6 +31,7 @@ const openPropFiles = {
 	colors: Colors,
 	'colors-hsl': ColorsHsl,
 	shadows: Shadows,
+	animations: Animations,
 	aspects: Aspects,
 	borders: Borders,
 	fonts: Fonts,
@@ -61,6 +62,65 @@ const generateSCSSModule = async (moduleName, importObj) => {
 			}
 			generatedScss += `${key}: ${value};\n`;
 		});
+
+	// animations.scss
+  	} else if (moduleName.toLowerCase() === 'animations') {
+  	generatedScss = "@use 'easings' as _e;\n@use 'media' as _mq;\n@use 'sass:string';\n$id: string.unique-id();\n\n";
+
+  	const createAnimationMixin = (animationName, keyframesContent, duration, easing) => {
+    		return `@mixin ${animationName} {
+      			$name: op-#{$id}-${animationName}; ${keyframesContent}
+      			animation: #{$name} ${duration} ${easing};
+    		}\n`;
+  	};
+
+  	const fadeInBloomPart = Animations['--animation-fade-in-bloom'].split(' ');
+  	const darkNameFIB = fadeInBloomPart[0].replace('fade-in-bloom', 'fade-in-bloom-dark');
+  	const darkDurationFIB = fadeInBloomPart[1];
+  	const darkEasingFIB = fadeInBloomPart[2].replace(/var\(--(.*?)\)/g, '#{_e.$$$1}');
+  	const fadeOutBloomPart = Animations['--animation-fade-out-bloom'].split(' ');
+  	const darkNameFOB = fadeOutBloomPart[0].replace('fade-out-bloom', 'fade-out-bloom-dark');
+  	const darkDurationFOB = fadeOutBloomPart[1];
+  	const darkEasingFOB = fadeOutBloomPart[2].replace(/var\(--(.*?)\)/g, '#{_e.$$$1}');
+  	const keyframeFIBDark = Animations['--animation-fade-in-bloom-@media:dark'].replace(/@keyframes\s+(\S+)/, '@keyframes #{$name}');
+  	const keyframeFOBDark = Animations['--animation-fade-out-bloom-@media:dark'].replace(/@keyframes\s+(\S+)/, '@keyframes #{$name}');
+  	let animationsStr = '';
+
+  	Object.entries(importObj).forEach(([key, value]) => {
+    		if (value.includes('@keyframes')) {
+      			let animationName = key.replace('--animation-', '');
+
+      			// Check if the animation name ends with "-@"
+      			if (animationName.endsWith('-@')) {
+        			animationName = animationName.slice(0, -2); // Remove the "-@" suffix
+      			}
+
+      			// Remove "@media:" if it exists
+      			animationName = animationName.replace('@media:', '');
+      
+      			const keyframesContent = value.replace(/@keyframes\s+(\S+)/, '@keyframes #{$name}');
+
+      			const animationKey = `--animation-${animationName}`;
+      
+      			if (importObj[animationKey]) {
+       				const animationParts = importObj[animationKey].split(' ');
+        			const duration = animationParts[1];
+        			const easing = animationParts[2].replace(/var\(--(.*?)\)/g, '#{_e.$$$1}');
+        			animationsStr += createAnimationMixin(animationName, keyframesContent, duration, easing);
+      			}
+    		}
+  	});
+
+  	generatedScss += `${animationsStr}
+@mixin ${darkNameFIB} {
+  $name: op-#{$id}-${darkNameFIB}; ${keyframeFIBDark}
+  animation: #{$name} ${darkDurationFIB} ${darkEasingFIB};
+}
+
+@mixin ${darkNameFOB} {
+  $name: op-#{$id}-${darkNameFOB}; ${keyframeFOBDark}
+  animation: #{$name} ${darkDurationFOB} ${darkEasingFOB};
+}`;
 
 		// media.scss
 	} else if (moduleName.toLowerCase() === 'media') {
