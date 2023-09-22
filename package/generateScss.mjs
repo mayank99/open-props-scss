@@ -68,27 +68,24 @@ const generateSCSSModule = async (moduleName, importObj) => {
   	generatedScss = "@use 'easings' as _e;\n@use 'media' as _mq;\n@use 'sass:string';\n$id: string.unique-id();\n\n";
 
   	const createAnimationMixin = (animationName, keyframesContent, duration, easing) => {
-    		return `@mixin ${animationName} {
-      			$name: op-#{$id}-${animationName}; ${keyframesContent}
-      			animation: #{$name} ${duration} ${easing};
-    		}\n`;
+   		return `@mixin ${animationName} {
+			$name: op-#{$id}-${animationName}; ${keyframesContent}
+			animation: #{$name} ${duration} ${easing};
+		}\n`;
   	};
 
-  	const fadeInBloomPart = Animations['--animation-fade-in-bloom'].split(' ');
-  	const darkNameFIB = fadeInBloomPart[0].replace('fade-in-bloom', 'fade-in-bloom-dark');
-  	const darkDurationFIB = fadeInBloomPart[1];
-  	const darkEasingFIB = fadeInBloomPart[2].replace(/var\(--(.*?)\)/g, '#{_e.$$$1}');
-  	const fadeOutBloomPart = Animations['--animation-fade-out-bloom'].split(' ');
-  	const darkNameFOB = fadeOutBloomPart[0].replace('fade-out-bloom', 'fade-out-bloom-dark');
-  	const darkDurationFOB = fadeOutBloomPart[1];
-  	const darkEasingFOB = fadeOutBloomPart[2].replace(/var\(--(.*?)\)/g, '#{_e.$$$1}');
-  	const keyframeFIBDark = Animations['--animation-fade-in-bloom-@media:dark'].replace(/@keyframes\s+(\S+)/, '@keyframes #{$name}');
-  	const keyframeFOBDark = Animations['--animation-fade-out-bloom-@media:dark'].replace(/@keyframes\s+(\S+)/, '@keyframes #{$name}');
+ 	const createDarkAnimationMixin = (darkName, darkKeyframesContent, darkDuration, darkEasing) => {
+		return `@mixin ${darkName} {
+			$name: op-#{$id}-${darkName}; ${darkKeyframesContent}
+			animation: #{$name} ${darkDuration} ${darkEasing};
+		}\n`;
+	};
+
   	let animationsStr = '';
 
   	Object.entries(importObj).forEach(([key, value]) => {
     		if (value.includes('@keyframes')) {
-      			let animationName = key.replace('--animation-', '');
+      			let animationName = key.replace('--animation-', ''); // Extract animation name
 
       			// Check if the animation name ends with "-@"
       			if (animationName.endsWith('-@')) {
@@ -103,24 +100,30 @@ const generateSCSSModule = async (moduleName, importObj) => {
       			const animationKey = `--animation-${animationName}`;
       
       			if (importObj[animationKey]) {
-       				const animationParts = importObj[animationKey].split(' ');
-        			const duration = animationParts[1];
-        			const easing = animationParts[2].replace(/var\(--(.*?)\)/g, '#{_e.$$$1}');
+        			const animationParts = importObj[animationKey].split(' ');
+        			const duration = animationParts[1]; // Extract duration (assuming it's always in the second position)
+        			const easing = animationParts[2].replace(/var\(--(.*?)\)/g, '#{_e.$$$1}'); // Extract easing by replacing 'var(--' and ')' with '_e.' (assuming it's always in the third position)
         			animationsStr += createAnimationMixin(animationName, keyframesContent, duration, easing);
       			}
     		}
-  	});
+		
+    		// Dark animations and keyframes
+    		if (key.includes('@media:dark')) {
+      			const keyframesParts = value.split(' ');
+      			const darkKeyframesContent = value.replace(/@keyframes\s+(\S+)/, '@keyframes #{$name}');
+      			const lightName = keyframesParts[1]; // Extract keyframes name
+      			const d = '-dark';
+      			const a = '--animation-'
+      			const darkName = lightName + d;
+      			const lightAnimation = a + lightName;
+      			const animationPart = Animations[lightAnimation].split(' ');
+      			const darkDuration = animationPart[1];
+      			const darkEasing = animationPart[2].replace(/var\(--(.*?)\)/g, '#{_e.$$$1}');
+      			animationsStr += createDarkAnimationMixin(darkName, darkKeyframesContent, darkDuration, darkEasing);
+    		}
+ 	});
 
-  	generatedScss += `${animationsStr}
-@mixin ${darkNameFIB} {
-  $name: op-#{$id}-${darkNameFIB}; ${keyframeFIBDark}
-  animation: #{$name} ${darkDurationFIB} ${darkEasingFIB};
-}
-
-@mixin ${darkNameFOB} {
-  $name: op-#{$id}-${darkNameFOB}; ${keyframeFOBDark}
-  animation: #{$name} ${darkDurationFOB} ${darkEasingFOB};
-}`;
+  	generatedScss += `${animationsStr}`;
 
 		// media.scss
 	} else if (moduleName.toLowerCase() === 'media') {
