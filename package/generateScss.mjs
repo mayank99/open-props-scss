@@ -85,11 +85,11 @@ const generateSCSSModule = async (moduleName, importObj) => {
 
   	Object.entries(importObj).forEach(([key, value]) => {
     		if (value.includes('@keyframes')) {
-      			let animationName = key.replace('--animation-', ''); // Extract animation name
+      			let animationName = key.replace('--animation-', '');
 
       			// Check if the animation name ends with "-@"
       			if (animationName.endsWith('-@')) {
-        			animationName = animationName.slice(0, -2); // Remove the "-@" suffix
+        			animationName = animationName.slice(0, -2);
       			}
 
       			// Remove "@media:" if it exists
@@ -101,8 +101,8 @@ const generateSCSSModule = async (moduleName, importObj) => {
       
       			if (importObj[animationKey]) {
         			const animationParts = importObj[animationKey].split(' ');
-        			const duration = animationParts[1]; // Extract duration (assuming it's always in the second position)
-        			const easing = animationParts[2].replace(/var\(--(.*?)\)/g, '#{_e.$$$1}'); // Extract easing by replacing 'var(--' and ')' with '_e.' (assuming it's always in the third position)
+        			const duration = animationParts[1];
+        			const easing = animationParts[2].replace(/var\(--(.*?)\)/g, '#{_e.$$$1}');
         			animationsStr += createAnimationMixin(animationName, keyframesContent, duration, easing);
       			}
     		}
@@ -111,7 +111,7 @@ const generateSCSSModule = async (moduleName, importObj) => {
     		if (key.includes('@media:dark')) {
       			const keyframesParts = value.split(' ');
       			const darkKeyframesContent = value.replace(/@keyframes\s+(\S+)/, '@keyframes #{$name}');
-      			const lightName = keyframesParts[1]; // Extract keyframes name
+      			const lightName = keyframesParts[1];
       			const d = '-dark';
       			const a = '--animation-'
       			const darkName = lightName + d;
