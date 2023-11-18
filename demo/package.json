@@ -3,9 +3,9 @@
 	"version": "0.1.0",
 	"type": "module",
 	"devDependencies": {
-		"astro": "^2.6.3",
+		"astro": "^3",
 		"open-props-scss": "*",
-		"sass": "^1.63.3"
+		"sass": "^1"
 	},
 	"scripts": {
 		"dev": "astro dev",
