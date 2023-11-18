@@ -63,67 +63,67 @@ const generateSCSSModule = async (moduleName, importObj) => {
 			generatedScss += `${key}: ${value};\n`;
 		});
 
-	// animations.scss
-  	} else if (moduleName.toLowerCase() === 'animations') {
-  	generatedScss = "@use 'easings' as _e;\n@use 'media' as _mq;\n@use 'sass:string';\n$id: string.unique-id();\n\n";
+		// animations.scss
+	} else if (moduleName.toLowerCase() === 'animations') {
+		generatedScss = "@use 'easings' as _e;\n@use 'media' as _mq;\n@use 'sass:string';\n$id: string.unique-id();\n\n";
 
-  	const createAnimationMixin = (animationName, keyframesContent, duration, easing) => {
-   		return `@mixin ${animationName} {
+		const createAnimationMixin = (animationName, keyframesContent, duration, easing) => {
+			return `@mixin ${animationName} {
 			$name: op-#{$id}-${animationName}; ${keyframesContent}
 			animation: #{$name} ${duration} ${easing};
 		}\n`;
-  	};
+		};
 
- 	const createDarkAnimationMixin = (darkName, darkKeyframesContent, darkDuration, darkEasing) => {
-		return `@mixin ${darkName} {
+		const createDarkAnimationMixin = (darkName, darkKeyframesContent, darkDuration, darkEasing) => {
+			return `@mixin ${darkName} {
 			$name: op-#{$id}-${darkName}; ${darkKeyframesContent}
 			animation: #{$name} ${darkDuration} ${darkEasing};
 		}\n`;
-	};
+		};
 
-  	let animationsStr = '';
+		let animationsStr = '';
 
-  	Object.entries(importObj).forEach(([key, value]) => {
-    		if (value.includes('@keyframes')) {
-      			let animationName = key.replace('--animation-', '');
+		Object.entries(importObj).forEach(([key, value]) => {
+			if (value.includes('@keyframes')) {
+				let animationName = key.replace('--animation-', '');
 
-      			// Check if the animation name ends with "-@"
-      			if (animationName.endsWith('-@')) {
-        			animationName = animationName.slice(0, -2);
-      			}
+				// Check if the animation name ends with "-@"
+				if (animationName.endsWith('-@')) {
+					animationName = animationName.slice(0, -2);
+				}
 
-      			// Remove "@media:" if it exists
-      			animationName = animationName.replace('@media:', '');
-      
-      			const keyframesContent = value.replace(/@keyframes\s+(\S+)/, '@keyframes #{$name}');
+				// Remove "@media:" if it exists
+				animationName = animationName.replace('@media:', '');
 
-      			const animationKey = `--animation-${animationName}`;
-      
-      			if (importObj[animationKey]) {
-        			const animationParts = importObj[animationKey].split(' ');
-        			const duration = animationParts[1];
-        			const easing = animationParts[2].replace(/var\(--(.*?)\)/g, '#{_e.$$$1}');
-        			animationsStr += createAnimationMixin(animationName, keyframesContent, duration, easing);
-      			}
-    		}
-		
-    		// Dark animations and keyframes
-    		if (key.includes('@media:dark')) {
-      			const keyframesParts = value.split(' ');
-      			const darkKeyframesContent = value.replace(/@keyframes\s+(\S+)/, '@keyframes #{$name}');
-      			const lightName = keyframesParts[1];
-      			const d = '-dark';
-      			const a = '--animation-'
-      			const darkName = lightName + d;
-      			const lightAnimation = a + lightName;
-      			const animationPart = Animations[lightAnimation].split(' ');
-      			const darkDuration = animationPart[1];
-      			const darkEasing = animationPart[2].replace(/var\(--(.*?)\)/g, '#{_e.$$$1}');
-      			animationsStr += createDarkAnimationMixin(darkName, darkKeyframesContent, darkDuration, darkEasing);
-    		}
- 	});
+				const keyframesContent = value.replace(/@keyframes\s+(\S+)/, '@keyframes #{$name}');
 
-  	generatedScss += `${animationsStr}`;
+				const animationKey = `--animation-${animationName}`;
+
+				if (importObj[animationKey]) {
+					const animationParts = importObj[animationKey].split(' ');
+					const duration = animationParts[1];
+					const easing = animationParts[2].replace(/var\(--(.*?)\)/g, '#{_e.$$$1}');
+					animationsStr += createAnimationMixin(animationName, keyframesContent, duration, easing);
+				}
+			}
+
+			// Dark animations and keyframes
+			if (key.includes('@media:dark')) {
+				const keyframesParts = value.split(' ');
+				const darkKeyframesContent = value.replace(/@keyframes\s+(\S+)/, '@keyframes #{$name}');
+				const lightName = keyframesParts[1];
+				const d = '-dark';
+				const a = '--animation-'
+				const darkName = lightName + d;
+				const lightAnimation = a + lightName;
+				const animationPart = Animations[lightAnimation].split(' ');
+				const darkDuration = animationPart[1];
+				const darkEasing = animationPart[2].replace(/var\(--(.*?)\)/g, '#{_e.$$$1}');
+				animationsStr += createDarkAnimationMixin(darkName, darkKeyframesContent, darkDuration, darkEasing);
+			}
+		});
+
+		generatedScss += `${animationsStr}`;
 
 		// media.scss
 	} else if (moduleName.toLowerCase() === 'media') {
