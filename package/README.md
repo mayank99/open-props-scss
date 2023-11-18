@@ -31,10 +31,22 @@ body {
 ```
 
 Shadows are made available through a `shadow()` function rather than a variable. This allows choosing between light and dark themes, as well as modifying `$shadow-color` and `$shadow-strength` if desired.
+
 ```scss
 box-shadow: op.shadow(1);
 box-shadow: op.shadow('inner-3', dark);
 box-shadow: op.shadow(5, $shadow-color: var(--my-shadow-color));
+```
+
+Animations are made available as mixins rather than a variable. Some animations (e.g. `fade-in-bloom` and `fade-out-bloom`) also have a dark theme version, which can be included by passing a `dark` argument to the mixin.
+```scss
+button {
+  @include op.scale-up;
+}
+
+section {
+  @include op.fade-in-bloom(dark);
+}
 ```
 
 ### Custom properties
