@@ -30,13 +30,13 @@ importers:
   package:
     devDependencies:
       lightningcss:
-        specifier: ^1
+        specifier: ^1.22.1
         version: 1.22.1
       open-props:
-        specifier: ^1.6.12
-        version: 1.6.12
+        specifier: ^1.6.16
+        version: 1.6.16
       sass:
-        specifier: ^1
+        specifier: ^1.69.5
         version: 1.69.5
 
 packages:
@@ -2718,8 +2718,8 @@ packages:
       mimic-fn: 4.0.0
     dev: true
 
-  /open-props@1.6.12:
-    resolution: {integrity: sha512-cYbjhnGiYitOa8UgDgIo3fs1qR7Vd/Mtyr1nZC/d1/kdIBPupF/xTcNV6cuWUHsI01oTGykJhgE7gDQMj2nTZg==}
+  /open-props@1.6.16:
+    resolution: {integrity: sha512-QogvUMJUa/SxW5kjmZM+6bqSE2JMLKNWRbFUksEJAGYC9tmewuavHzZPq+dCeZtam+n0Q+D6DGA0DPjNeCVJNg==}
     dev: true
 
   /ora@7.0.1:
