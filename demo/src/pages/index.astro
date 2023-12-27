@@ -2,7 +2,13 @@
 
 <p>Try editing <code>index.astro</code> on stackblitz.</p>
 
-<p>For a full list of variables, see the compiled source on <a href='https://unpkg.com/open-props-scss'>unpkg</a>.</p>
+<aside role='note'>
+	<p>
+		For a full list of variables, see the compiled source on <a
+			href='https://unpkg.com/open-props-scss'>unpkg</a
+		>.
+	</p>
+</aside>
 
 <style lang='scss'>
 	@use 'open-props-scss' as op;
@@ -15,7 +21,8 @@
 		--page-link: #{op.$violet-8};
 		--component-bg: #{op.$gray-1};
 		--component-border: #{op.$gray-5};
-
+		--component-shadow: #{op.shadow(1)};
+		--component-radius: #{op.$radius-2};
 		--font-base: #{op.$font-size-fluid-1} #{op.$font-sans};
 		--font-mono: 0.9em #{op.$font-mono};
 		--content-width: #{min(95%, op.$size-content-3)};
@@ -23,9 +30,10 @@
 		@media (op.$OSdark) {
 			--page-bg: #{op.$gray-9};
 			--page-text: #{op.$gray-1};
-			--page-link: #{op.$violet-3};
+			--page-link: #{op.$violet-2};
 			--component-bg: #{op.$gray-8};
 			--component-border: #{op.$gray-7};
+			--component-shadow: #{op.shadow(1, 'dark')};
 		}
 	}
 
@@ -41,12 +49,26 @@
 		font: var(--font-mono);
 		background-color: var(--component-bg);
 		padding: op.$size-1 op.$size-2;
-		border-radius: op.$radius-2;
+		border-radius: var(--component-radius);
 		border: 1px solid var(--component-border);
 	}
 
 	a {
 		color: var(--page-link);
 		text-underline-offset: 0.25ex;
+	}
+
+	aside {
+		background-color: var(--component-bg);
+		box-shadow: var(--component-shadow);
+		padding: op.$size-2;
+		margin-inline-start: calc(-1 * #{op.$size-2});
+		border-radius: var(--component-radius);
+		border: 1px solid var(--component-border);
+		font-size: op.$font-size-2;
+	}
+
+	aside > p {
+		margin: 0;
 	}
 </style>

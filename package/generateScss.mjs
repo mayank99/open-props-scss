@@ -112,18 +112,19 @@ const generateSCSSModule = async (moduleName, importObj) => {
 		const lightStrength = Shadows['--shadow-strength'];
 		const darkColor = Shadows['--shadow-color-@media:dark'];
 		const darkStrength = Shadows['--shadow-strength-@media:dark'];
-		const entries = Object.entries(importObj);
+		const lightInnerHighlight = Shadows['--inner-shadow-highlight'];
+		const darkInnerHighlight = Shadows['--inner-shadow-highlight-@media:dark'];
+
+		// filter out non-shadow variables
+		const entries = Object.entries(importObj).filter(([key]) => {
+			return key !== '--shadow-color' &&
+				key !== '--shadow-strength' &&
+				!key.includes('@') &&
+				!key.includes('highlight')
+		});
 
 		for (let index = 0; index < entries.length; index++) {
 			let [key, value] = entries[index];
-
-			if (
-				key == '--shadow-color' ||
-				key == '--shadow-strength' ||
-				key.includes('@')
-			) {
-				continue; // skip light and dark for the other loops
-			}
 
 			key = key.replace('--shadow-', '');
 			if (key.includes('--inner-shadow-')) {
@@ -140,11 +141,12 @@ const generateSCSSModule = async (moduleName, importObj) => {
 			}
 		}
 
-		generatedScss += `@use 'sass:map';
+		generatedScss += `@use 'sass:map';\n@use 'sass:list';
 
 @function shadow($level, $theme: light, $shadow-color: null, $shadow-strength: null) {
   $--shadow-color: $shadow-color or if($theme == dark, ${darkColor}, ${lightColor});
   $--shadow-strength: $shadow-strength or if($theme == dark, ${darkStrength}, ${lightStrength});
+	$--inner-shadow-highlight: if($theme == dark, (${darkInnerHighlight}), (${lightInnerHighlight}));
   $shadows-map: (
     ${mapKeysValues}
   );
