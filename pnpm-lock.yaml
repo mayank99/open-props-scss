@@ -33,8 +33,8 @@ importers:
         specifier: ^1.22.1
         version: 1.22.1
       open-props:
-        specifier: ^1.6.16
-        version: 1.6.16
+        specifier: ^1.7.7
+        version: 1.7.7
       sass:
         specifier: ^1.69.5
         version: 1.69.5
@@ -2718,8 +2718,8 @@ packages:
       mimic-fn: 4.0.0
     dev: true
 
-  /open-props@1.6.16:
-    resolution: {integrity: sha512-QogvUMJUa/SxW5kjmZM+6bqSE2JMLKNWRbFUksEJAGYC9tmewuavHzZPq+dCeZtam+n0Q+D6DGA0DPjNeCVJNg==}
+  /open-props@1.7.7:
+    resolution: {integrity: sha512-yn4B4D2dG7HGiZQSSdS03+jnsKlVIfdcWk6XyvSeTHcu2oqRbIEnJ9BVT7Qfq5N9p6z7tEIHTuRZoxckAemfqA==}
     dev: true
 
   /ora@7.0.1:
