@@ -30,8 +30,8 @@
 		"dev": "node --watch ./generateScss.mjs"
 	},
 	"devDependencies": {
-		"lightningcss": "^1.22.1",
+		"lightningcss": "^1.27.0",
 		"open-props": "^1.7.7",
-		"sass": "^1.69.5"
+		"sass": "^1.80.6"
 	}
 }

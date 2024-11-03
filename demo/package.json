@@ -3,7 +3,7 @@
 	"version": "0.1.0",
 	"type": "module",
 	"devDependencies": {
-		"astro": "^3",
+		"astro": "^4",
 		"open-props-scss": "*",
 		"sass": "^1"
 	},
