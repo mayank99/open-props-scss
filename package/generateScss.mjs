@@ -19,11 +19,9 @@ import BrandColors from 'open-props/src/props.brand-colors.js';
 
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 
 import { CustomMediaHelper } from './CustomMediaHelper.mjs';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const customMediaHelper = new CustomMediaHelper(Media);
 
 const openPropFiles = {
@@ -46,7 +44,7 @@ const openPropFiles = {
 };
 
 const writeSCSSModule = async (moduleName, content) => {
-	const outFile = path.join(__dirname, `${moduleName}.scss`);
+	const outFile = path.join(import.meta.dirname, `${moduleName}.scss`);
 	await fs.writeFile(outFile, content, { encoding: 'utf-8' });
 };
 
@@ -207,5 +205,5 @@ for (const moduleName in openPropFiles) {
 	indexScss += `@forward '${moduleName}';\n`;
 }
 
-const indexOutFile = path.join(__dirname, 'index.scss');
+const indexOutFile = path.join(import.meta.dirname, 'index.scss');
 await fs.writeFile(indexOutFile, indexScss, { encoding: 'utf-8' });
