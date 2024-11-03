@@ -15,6 +15,7 @@ import { CustomMedia as Media } from 'open-props/src/media';
 import Animations from 'open-props/src/animations';
 import OklchColors from 'open-props/src/props.colors-oklch.js';
 import OklchHues from 'open-props/src/props.colors-oklch-hues.js';
+import BrandColors from 'open-props/src/props.brand-colors.js';
 
 import fs from 'node:fs/promises';
 import path from 'node:path';
@@ -30,6 +31,7 @@ const openPropFiles = {
 	sizes: Sizes,
 	colors: Colors,
 	'colors-hsl': ColorsHsl,
+	'colors-brand': BrandColors,
 	shadows: Shadows,
 	animations: Animations,
 	aspects: Aspects,
@@ -197,7 +199,7 @@ for (const [moduleName, importObj] of Object.entries(openPropFiles)) {
 }
 
 // Generate colors-oklch.scss
-generateOklchScss(OklchColors);
+generateOklchScss();
 
 // Generate index.scss
 let indexScss = '';
